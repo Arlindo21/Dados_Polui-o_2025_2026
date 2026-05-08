@@ -71,10 +71,29 @@ def pipeline(df):
     df_limpos['ano'] = df_limpos['date'].dt.year
     df_limpos['hora'] = df_limpos['date'].dt.hour
     df_limpos['minuto'] = df_limpos['date'].dt.minute
-    
+
     return df_limpos
 
 # Aplicando o pipeline
 df_Dados_poluicao_final = pipeline(df_Dados_poluicao_raw)
 print('\n==== Dados tratados ====')
 print(df_Dados_poluicao_final.head(50))
+
+#salvando o arquivo tratado em csv
+baixar='dados_poluicao_final.csv'
+df_Dados_poluicao_final.to_csv(baixar, 
+                               index=False,
+                               sep=',',
+                               encoding='utf-8-sig')
+
+print(f'Arquivo salvo com sucesso: {baixar}')
+
+
+import streamlit as st
+st.title("Dashboard de Poluição")
+
+st.components.v1.iframe(
+    "https://datastudio.google.com/embed/reporting/9bf1934e-cb83-431b-8407-5b501de5f8bc/page/7KaxF",
+    width=1200,
+    height=800
+)
